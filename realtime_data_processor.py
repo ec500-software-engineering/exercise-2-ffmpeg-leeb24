@@ -33,6 +33,7 @@ class RealTimeDataProcessor(threading.Thread):
             incoming_data = self._in_queue.get(block=True)
             if incoming_data.get_type() == SensorDataType.BLOOD_PRESSURE:
                 if not RealTimeDataProcessor.blood_pressure_is_normal(incoming_data):
+
                     self._notification_man.send_message(
                         Message(
                             '!!!! PATIENT ALERT BLOOD PRESSURE ABNORMAL !!!!',
@@ -41,6 +42,7 @@ class RealTimeDataProcessor(threading.Thread):
                     )
             elif incoming_data.get_type() == SensorDataType.BLOOD_PULSE:
                 if not RealTimeDataProcessor.blood_pulse_is_normal(incoming_data):
+                    
                     self._notification_man.send_message(
                         Message(
                             '!!!! PATIENT ALERT PULSE IS ABNORMAL !!!!',

@@ -1,4 +1,6 @@
 from ascii_graph import Pyasciigraph
+from ascii_graph.colors import *
+from ascii_graph.colordata import vcolor
 import threading
 
 class DisplayHandler(object):
@@ -65,10 +67,11 @@ class TextTerminalDisplay(DisplayHandler):
 
     def display_graph(self):
         #print('Thread {}: waiting for lock'.format(threading.get_ident()))
+        pattern = [Gre, Blu, Red]
         
         self._graph_lock.acquire(blocking=True)
-        data = [('Heart Rate', self._cur_pulse), ('SYS mmHg kPa', self._cur_systolic),
-                ('DIA mmHg kPa', self._cur_diastolic), ('Oxygen Saturation', self._cur_oxygen)]
+        data = vcolor([('Heart Rate', self._cur_pulse), ('SYS mmHg kPa', self._cur_systolic),
+                ('DIA mmHg kPa', self._cur_diastolic), ('Oxygen Saturation', self._cur_oxygen)],pattern)
 
         for graph_line in self._graph.graph('VITAL READINGS', data):
             print(

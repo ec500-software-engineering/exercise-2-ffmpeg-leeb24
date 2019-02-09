@@ -13,10 +13,11 @@ def main(cmd_args):
     Entry point of application; in here we spawn the sensor threads, AI thread and
     realtime data processing thread and then wait till we need to quit
     :param cmd_args: dictionary of expected command line arguments
-    :return: 0 on success and non-zero on error
+    :return: 0 on success and non-zero on error 
     '''
     data_proc_queue = Queue()
     tty = display.TextTerminalDisplay()
+
     notification_man = notification_manager.FlexibleNotificationManager(
         Contact('Nurse Suzy', None, None, None),
         notifications_sender.MockSMSSender(),
