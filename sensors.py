@@ -56,6 +56,7 @@ class BloodOxygenSensorReader(SensorReader):
                 self._data_proc_queue.put(oxy_data, block=False)
                 # we would decode and encode here
                 self._display.display_blood_oxygen(oxy_raw)
+            time.sleep(1)
             cur_time = time.time()
 
 
