@@ -25,8 +25,8 @@ def main(cmd_args):
     )
     
     pulse_reader = sensors.BloodPulseSensorReader(1, data_proc_queue, tty)
-    oxy_reader = sensors.BloodOxygenSensorReader(4, data_proc_queue, tty)
-    pressure_reader = sensors.BloodPressureSensorReader(2, data_proc_queue, tty)
+    oxy_reader = sensors.BloodOxygenSensorReader(4, data_proc_queue, tty)#4
+    pressure_reader = sensors.BloodPressureSensorReader(2, data_proc_queue, tty)#2
     real_time_proc = realtime_data_processor.RealTimeDataProcessor(data_proc_queue, notification_man)
 
     pulse_reader.start()

@@ -1,5 +1,5 @@
 from ascii_graph import Pyasciigraph
-
+import threading
 
 class DisplayHandler(object):
 
@@ -47,27 +47,35 @@ class TextTerminalDisplay(DisplayHandler):
         self._cur_systolic = 0
         self._cur_diastolic = 0
         self._cur_pulse = 0
+        self._graph_lock = threading.Lock()
+        self._graph = Pyasciigraph()
 
     def display_blood_oxygen(self, oxy):
         self._cur_oxygen = oxy
-        self.display_data()
+        self.display_graph()
 
     def display_blood_pressure(self, systolic, diastolic):
         self._cur_diastolic = diastolic
         self._cur_systolic = systolic
-        self.display_data()
+        self.display_graph()
 
     def display_blood_pulse(self, pulse):
         self._cur_pulse = pulse
-        self.display_data()
+        self.display_graph()
 
-    def display_data(self):
+    def display_graph(self):
+        #print('Thread {}: waiting for lock'.format(threading.get_ident()))
+        
+        self._graph_lock.acquire(blocking=True)
+        data = [('Heart Rate', self._cur_pulse), ('SYS mmHg kPa', self._cur_systolic),
+                ('DIA mmHg kPa', self._cur_diastolic), ('Oxygen Saturation', self._cur_oxygen)]
 
-        test = [('Heart Rate', self._cur_pulse), ('SYS mmHg kPa', self._cur_systolic), ('DIA mmHg kPa', self._cur_diastolic),('Oxygen Saturation', self._cur_oxygen)]
-        graph = Pyasciigraph()
-        for line in  graph.graph('test print', test):
-            print(line)
-
+        for graph_line in self._graph.graph('VITAL READINGS', data):
+            print(
+                graph_line
+            )
+        #print('Thread {}: releasing lock'.format(threading.get_ident()))
+        self._graph_lock.release()
 
 
 
