@@ -7,13 +7,13 @@ def convert_video(video_input):
 	parsed = video_input.split('.')
 	output_vid = parsed[0]+'res.'+parsed[1]
 	cmds =['ffmpeg', '-i',video_input ,'-s','hd720',output_vid]
-	sub1 = subprocess.Popen(cmds)
+	subprocess.Popen(cmds)
 
 def input_Queue(vidQ):
 	start_time = time.time()
 
 	results = [pool.apply(convert_video, args=(video,)) for video in vidQ]
-
+	print(results)
 	print("--- %s seconds ---" % (time.time() - start_time))
 
 
