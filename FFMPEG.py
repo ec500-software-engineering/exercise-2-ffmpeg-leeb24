@@ -3,6 +3,7 @@ import time
 import multiprocessing as mp
 import queue
 import threading
+import validation as test 
 
 def convert_video_720p(video_input):
 	
@@ -10,6 +11,7 @@ def convert_video_720p(video_input):
 		output_vid = parsed[0]+'res.'+parsed[1]
 		cmds =['ffmpeg', '-i',video_input[0] ,'-s','hd720',output_vid]
 		subprocess.call(cmds)
+		test.test_duration(video_input[0],output_vid)
 
 		return print("Conversion Finished")
 
@@ -48,8 +50,11 @@ start_time = time.time()
 
 thread1 =threading.Thread(target=convert_video_720p,args=(vidQueue720))
 thread2 =threading.Thread(target=convert_video_480p,args=(vidQueue480))
+
 thread1.start()
 thread2.start()
+
+
 print("--- %s seconds ---" % (time.time() - start_time))
 
 
