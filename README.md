@@ -6,8 +6,8 @@ exercise-2-ffmpeg-leeb24 created by GitHub Classroom
   $ python3 FFMPEG.py 
   ```
 # Libraries Used 
-subprocess <br />
-threading <br />
+- subprocess <br />
+- threading <br />
 ```
 pip2 install pytest
 ```
